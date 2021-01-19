@@ -163,16 +163,17 @@ func (p *CDD) AnalysisUniqueCode28(UniqueCode string, tableName string) (*CLOUDU
 	return &resultCode, nil
 }
 
-func (p *CDD) AnalysisListUniqueCode28(listUniqueCode []string, tableName string) (map[string]*CLOUDUNIQUECODE, error) {
-	var resultList map[string]*CLOUDUNIQUECODE
-	resultList = make(map[string]*CLOUDUNIQUECODE)
-	for _, itemCode := range listUniqueCode {
-		d, err := p.AnalysisUniqueCode28(itemCode, tableName)
+func (p *CDD) AnalysisListUniqueCode28(listUniqueCode []string, tableName string) (map[string][]*CLOUDUNIQUECODE, error) {
+	var resultList map[string][]*CLOUDUNIQUECODE
+	resultList = make(map[string][]*CLOUDUNIQUECODE)
+	for _, item := range listUniqueCode {
+		d, err := p.AnalysisUniqueCode28(item, tableName)
 		if err != nil {
 			fmt.Println(err.Error())
-			return nil, err
+			return resultList, err
 		}
-		resultList[itemCode] = d
+		key := fmt.Sprintf("%v%v", d.DbCode, d.TableCode)
+		resultList[key] = append(resultList[key], d)
 	}
 	return resultList, nil
 }
@@ -233,16 +234,17 @@ func (p *CDD) AnalysisUniqueCode36(cloudCodeStr string, tableName string) (*CLOU
 	return &resultCloudCode, nil
 }
 
-func (p *CDD) AnalysisListUniqueCode36(listCloudCodeStr []string, tableName string) (map[string]*CLOUDUNIQUECODE, error) {
-	var resultList map[string]*CLOUDUNIQUECODE
-	resultList = make(map[string]*CLOUDUNIQUECODE)
-	for _, itemCode := range listCloudCodeStr {
-		d, err := p.AnalysisUniqueCode36(itemCode, tableName)
+func (p *CDD) AnalysisListUniqueCode36(listCloudCodeStr []string, tableName string) (map[string][]*CLOUDUNIQUECODE, error) {
+	var resultList map[string][]*CLOUDUNIQUECODE
+	resultList = make(map[string][]*CLOUDUNIQUECODE)
+	for _, item := range listCloudCodeStr {
+		d, err := p.AnalysisUniqueCode36(item, tableName)
 		if err != nil {
 			fmt.Println(err.Error())
-			return nil, err
+			return resultList, err
 		}
-		resultList[itemCode] = d
+		key := fmt.Sprintf("%v%v", d.DbCode, d.TableCode)
+		resultList[key]= append(resultList[key],d)
 	}
 	return resultList, nil
 }
