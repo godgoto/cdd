@@ -154,6 +154,7 @@ func (p *CDD) AnalysisUniqueCode28(UniqueCode string, tableName string) (*CLOUDU
 	resultCode.TableCode = UniqueCode[22:24]
 	resultCode.Nom = UniqueCode[24:28]
 	resultCode.Conn = nil
+	resultCode.UniqueCode = UniqueCode
 	key := fmt.Sprintf("%v%v", resultCode.DbCode, resultCode.TableCode)
 	if _, ok := p.connMap[key]; ok {
 		rConn := p.connMap[key]
